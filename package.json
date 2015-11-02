@@ -1,0 +1,39 @@
+{
+    "name": "teq-http",
+    "version": "0.0.1",
+    "description": "teq http module",
+    "main": "lib",
+    "scripts": {
+        "test": "mocha test",
+        "build": "babel src/lib --out-dir lib && babel src/test --out-dir test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/IncSW/teq-http.git"
+    },
+    "author": "Aleksey Prokopenko <aleksey@incsw.in> (http://incsw.in)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/IncSW/teq-http/issues"
+    },
+    "homepage": "https://github.com/IncSW/teq-http",
+    "readmeFilename": "README.md",
+    "keywords": [
+        "teq",
+        "http",
+        "server"
+    ],
+    "engines": {
+        "node": ">= 5.0.0"
+    },
+    "files": [
+        "lib"
+    ],
+    "devDependencies": {
+        "mocha": "2.3.x",
+        "supertest": "1.x",
+        "babel-cli": "6.0.x",
+        "babel-plugin-transform-es2015-parameters": "6.0.x",
+        "babel-plugin-transform-es2015-modules-commonjs": "6.0.x"
+    }
+}
