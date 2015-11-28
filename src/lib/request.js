@@ -1,7 +1,6 @@
 'use strict';
 
 import cookie from './cookie';
-import qs from 'querystring';
 import url from 'url';
 
 /**
@@ -13,7 +12,7 @@ export default class Request {
      * 
      * @param {ClientRequest} request
      * 
-     * @returns {undefined}
+     * @returns {Request}
      */
     constructor(request) {
         this.httpRequest = request;
@@ -38,4 +37,4 @@ export default class Request {
 
         return defaultValue;
     }
-};
+}

@@ -1,42 +1,32 @@
 'use strict';
 
+import statusCodes from '../lib/status-codes';
 import Server from '../lib/server';
 import request from 'supertest';
-import assert from 'assert';
 
-describe('context', function () {
+describe('context', () => {
+    describe('end', () => {
+        it('basic', (done) => {
+            let server = new Server();
 
-    describe('end', function () {
-
-        it('basic', function (done) {
-
-            var server = new Server();
-
-            server.on('request', function (context) {
-                context.end('Created', 201);
+            server.on('request', (context) => {
+                context.end(statusCodes[statusCodes.CREATED], statusCodes.CREATED);
             });
 
-            request(server.httpServer).get('/').expect('Created').expect(201, done);
-
+            request(server.httpServer).get('/').expect(statusCodes[statusCodes.CREATED]).expect(statusCodes.CREATED, done);
         });
-
     });
 
-    describe('set/get', function () {
+    describe('set/get', () => {
+        it('basic', (done) => {
+            let server = new Server();
 
-        it('basic', function (done) {
-
-            var server = new Server();
-
-            server.on('request', function (context) {
+            server.on('request', (context) => {
                 context.set('foo', 'bar');
                 context.end(context.get('foo'));
             });
 
             request(server.httpServer).get('/').expect('bar', done);
-
         });
-
     });
-
 });

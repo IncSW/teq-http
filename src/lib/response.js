@@ -1,5 +1,7 @@
 'use strict';
 
+import statusCodes from './status-codes';
+
 /**
  * Response
  */
@@ -9,7 +11,7 @@ export default class Response {
      * 
      * @param {ServerResponse} response
      * 
-     * @returns {undefined}
+     * @returns {Response}
      */
     constructor(response) {
         this.httpResponse = response;
@@ -19,12 +21,12 @@ export default class Response {
     /**
      * 
      * @param {String} data
-     * @param {Number} [statusCode=200]
+     * @param {Number} [statusCode=statusCodes.OK]
      * 
      * @returns {Boolean}
      */
-    end(data, statusCode = 200) {
-        var response = this.httpResponse;
+    end(data, statusCode = statusCodes.OK) {
+        let response = this.httpResponse;
 
         if (response.finished) {
             return false;
@@ -46,13 +48,13 @@ export default class Response {
      * @param {String} expires
      * @param {String} path
      * @param {String} domain
-     * @param {Boolean} httpOnly
-     * @param {Boolean} secure
+     * @param {Boolean} [httpOnly=false]
+     * @param {Boolean} [secure=false]
      * 
      * @returns {Boolean}
      */
     setCookie(key, value, expires, path, domain, httpOnly = false, secure = false) {
-        var cookie;
+        let cookie;
 
         if (this.httpResponse.finished) {
             return false;
@@ -78,4 +80,4 @@ export default class Response {
 
         return true;
     }
-};
+}

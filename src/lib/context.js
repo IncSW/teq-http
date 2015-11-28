@@ -13,7 +13,7 @@ export default class Context {
      * @param {ClientRequest} request
      * @param {ServerResponse} response
      * 
-     * @returns {undefined}
+     * @returns {Context}
      */
     constructor(request, response) {
         this.ended = false;
@@ -73,9 +73,9 @@ export default class Context {
      * @returns {Number}
      */
     getTime() {
-        var diff = process.hrtime(this.start);
+        let diff = process.hrtime(this.start);
 
-        return diff[0] * 1e9 + diff[1];
+        return diff[0] * 1e9 + diff[1]; //eslint-disable-line no-magic-numbers
     }
     
     /**
@@ -90,4 +90,4 @@ export default class Context {
 
         return this;
     }
-};
+}

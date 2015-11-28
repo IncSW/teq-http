@@ -1,12 +1,11 @@
 'use strict';
 
+import statusCodes from './status-codes';
 import EventEmitter from 'events';
 import Context from './context';
 import http from 'http';
 
-var defaultConfig;
-
-defaultConfig = {
+const defaultConfig = {
     timeout: 1000
 };
 
@@ -19,29 +18,30 @@ export default class Server extends EventEmitter {
      * 
      * @param {Object} [config={}]
      * 
-     * @returns {undefined}
+     * @returns {Server}
      */
     constructor(config = {}) {
+        let self;
+        
         super();
-        var self = this;
-
+        self = this;
         this.handler = null;
         this.config = config = this.prepareConfig(config);
-        this.httpServer = http.createServer(function serverHandler(request, response) {
-            var socket = request.socket;
-            var timeout;
-            var context;
+        this.httpServer = http.createServer((request, response) => {
+            let socket = request.socket;
+            let timeout;
+            let context;
 
             socket.removeAllListeners('timeout');
             context = new Context(request, response);
-            response.on('finish', function responseFinish() {
+            response.on('finish', () => {
                 clearTimeout(timeout);
                 context.destroy();
                 socket.destroy();
             });
 
-            timeout = setTimeout(function timeout() {
-                context.end('504 Gateway Timeout', 504);
+            timeout = setTimeout(() => {
+                context.end(statusCodes[statusCodes.GATEWAY_TIMEOUT], statusCodes.GATEWAY_TIMEOUT);
             }, config.timeout);
             
             self.emit('request', context);
@@ -55,8 +55,8 @@ export default class Server extends EventEmitter {
      * @returns {Object}
      */
     prepareConfig(config) {
-        var result = {};
-        var key;
+        let result = {};
+        let key;
 
         for (key in defaultConfig) {
             result[key] = config[key] === undefined ? defaultConfig[key] : config[key];

@@ -2,24 +2,17 @@
 
 import Server from '../lib/server';
 import request from 'supertest';
-import assert from 'assert';
 
-describe('request', function () {
+describe('request', () => {
+    describe('get', () => {
+        it('basic', (done) => {
+            let server = new Server();
 
-    describe('get', function () {
-
-        it('basic', function (done) {
-
-            var server = new Server();
-
-            server.on('request', function (context) {
+            server.on('request', (context) => {
                 context.end(context.request.get('foo'));
             });
 
             request(server.httpServer).get('/?foo=bar').expect('bar', done);
-
         });
-
     });
-
 });

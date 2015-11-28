@@ -1,7 +1,7 @@
 'use strict';
 
-var parseParameters;
-var parseParameter;
+let parseParameters;
+let parseParameter;
 
 /**
  * 
@@ -10,15 +10,15 @@ var parseParameter;
  * @returns {Array}
  */
 parseParameter = function parseParameter(parameterString) {
-    var parts = parameterString.split('=');
-    var key = parts.shift().trim();
-    var value = parts.join('=').trim();
+    let parts = parameterString.split('=');
+    let key = parts.shift().trim();
+    let value = parts.join('=').trim();
     
     if (!value) {
         value = [key, null];
     } else {
         if (value[0] === '"') {
-            value = value.slice(1, -1);
+            value = value.slice(1, -1); //eslint-disable-line no-magic-numbers
         }
     }
     
@@ -34,16 +34,18 @@ parseParameter = function parseParameter(parameterString) {
  * @returns {Object}
  */
 parseParameters = function parseParameters(parameters) {
+    let result;
+    let parts;
+    let i;
+    
     if (typeof parameters === 'string') {
         parameters = parameters.split(';');
     }
     if (!Array.isArray(parameters)) {
         throw new TypeError('parameters must be a String or Array');
     }
-    var i = parameters.length;
-    var result = {};
-    var parts;
-
+    i = parameters.length;
+    result = {};
     while (i--) {
         parts = parseParameter(parameters[i]);
         result[parts[0]] = parts[1];
