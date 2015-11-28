@@ -1,11 +1,14 @@
 {
     "name": "teq-http",
     "version": "0.0.1",
-    "description": "teq http module",
+    "description": "TeQ HTTP module",
     "main": "lib",
     "scripts": {
-        "test": "mocha test",
-        "build": "babel src/lib --out-dir lib && babel src/test --out-dir test"
+        "build": "babel src/lib --out-dir lib && babel src/test --out-dir test",
+        "test": "npm run lint && mocha test",
+        "lint": "eslint src",
+        "pretest": "npm run build",
+        "prepublish": "npm test"
     },
     "repository": {
         "type": "git",
@@ -30,10 +33,11 @@
         "lib"
     ],
     "devDependencies": {
-        "mocha": "2.3.x",
+        "eslint": "1.x",
+        "mocha": "2.x",
         "supertest": "1.x",
-        "babel-cli": "6.0.x",
-        "babel-plugin-transform-es2015-parameters": "6.0.x",
-        "babel-plugin-transform-es2015-modules-commonjs": "6.0.x"
+        "babel-cli": "6.x",
+        "babel-plugin-transform-es2015-parameters": "6.x",
+        "babel-plugin-transform-es2015-modules-commonjs": "6.x"
     }
 }
